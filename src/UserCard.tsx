@@ -12,7 +12,7 @@ function UserCard(props: any) {
     return (
         <>
             <Link to={`/users/${props.id}`} key={props.id} className="m-5 text-center">
-              <Card sx={{ maxWidth: 345 }}>
+                <Card>
       <CardActionArea>
         <CardMedia
           component="img"
@@ -22,7 +22,7 @@ function UserCard(props: any) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {props.first_name + props.last_name}
+            {props.first_name + " " + props.last_name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Email: {props.email}

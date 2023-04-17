@@ -21,7 +21,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/users/:userId" element={<UserDetail />} />
+          <Route path="/users/:id" element={<UserDetail />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
         <Footer />
