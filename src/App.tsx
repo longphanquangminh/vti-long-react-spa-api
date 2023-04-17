@@ -12,6 +12,7 @@ import Header from './Header'
 import Home from './Home'
 import NoPage from './NoPage';
 import UserDetail from './UserDetail';
+import UserPosts from './UserPosts';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/users/:id" element={<UserDetail />} />
+          <Route path="/users/:id/posts" element={<UserPosts />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
         <Footer />

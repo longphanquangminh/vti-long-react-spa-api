@@ -25,6 +25,7 @@ function UserDetail() {
             <p>Name: {userData.first_name} {userData.last_name}</p>
             <p>Email: {userData.email}</p>
             <img src={userData.avatar} alt={userData.first_name} />
+            <div><Link to={`/users/${id}/posts`}>See user post</Link></div>
             <Link to="/">Back to homepage</Link>
         </>
     )

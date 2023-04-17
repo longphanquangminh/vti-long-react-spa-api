@@ -13,7 +13,7 @@ function Home() {
 
   useEffect(() => {
     axios
-    .get("https://reqres.in/api/users?page=1")
+    .get("https://reqres.in/api/users")
     .then((res) => {
         setUserData(res.data.data)
     })
