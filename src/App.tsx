@@ -11,6 +11,8 @@ import Footer from './Footer'
 import Header from './Header'
 import Home from './Home'
 import NoPage from './NoPage';
+import UserDetail from './UserDetail';
+import UserPosts from './UserPosts';
 import UserTasks from './UserTasks';
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/users/:id" element={<UserDetail />} />
+          <Route path="/users/:id/posts" element={<UserPosts />} />
           <Route path="/users/:id/todos" element={<UserTasks />} />
           <Route path="*" element={<NoPage />} />
         </Routes>

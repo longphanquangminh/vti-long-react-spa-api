@@ -9,24 +9,30 @@ import { CardActionArea } from '@mui/material';
 
 function UserCard(props: any) {
 
-  return (
-    <>
-      <Link to={`/users/${props.id}/todos`} key={props.id} className="m-5 text-center">
-        <Card>
-          <CardActionArea>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {props.name}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Email: {props.email}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-      </Link>
-    </>
-  )
+    return (
+        <>
+            <Link to={`/users/${props.id}`} key={props.id} className="m-5 text-center">
+                <Card>
+      <CardActionArea>
+        <CardMedia
+          component="img"
+          height="140"
+          image={props.avatar}
+          alt="green iguana"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {props.first_name + " " + props.last_name}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Email: {props.email}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
+            </Link>
+        </>
+    )
 }
 
 export default UserCard
