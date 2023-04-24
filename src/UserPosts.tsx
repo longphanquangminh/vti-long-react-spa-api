@@ -22,8 +22,8 @@ function UserPosts() {
         <>
             <h1>User Posts:</h1>
             <div className="my-5">
-                {userPost.map((post: any) => {
-                    return <p key={post.id} id={post.id}>{post.title}</p>
+                {userPost.map((post: any, index: any) => {
+                    return <p key={post.id} id={post.id}>{index + 1}. {post.title}</p>
                 })}
             </div>
             <Link to={`/users/${id}`}>Back to User Details</Link>

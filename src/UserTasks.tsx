@@ -34,18 +34,18 @@ function UserTasks() {
             <h1>User Detailed Tasks:</h1>
             <br />
             <h2>Undone Tasks:</h2>
-            {userTask.filter((item: any) => item.completed == false).map((task: any) => {
+            {userTask.filter((item: any) => item.completed == false).map((task: any, index: any) => {
                 return (
                     <div key={task.id} id={task.id} className="mb-5">
-                        <p>{task.title}</p>
+                        <p>{index + 1}. {task.title}</p>
                         {!task.completed && <button onClick={() => markDone(task.id)}>Mark done</button>}
                     </div>
                 )
             })}
             <br />
             <h2>Done Tasks:</h2>
-            {userTask.filter((item: any) => item.completed == true).map((task: any) => {
-                return <p key={task.id} id={task.id}>{task.title}</p>
+            {userTask.filter((item: any) => item.completed == true).map((task: any, index: any) => {
+                return <p key={task.id} id={task.id}>{index + 1}. {task.title}</p>
             })}
             <br />
             <p>Done {[].concat(...userTask).filter((item: any) => item.completed == true).length} / {[].concat(...userTask).length} tasks</p>
