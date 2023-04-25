@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios'
+import Loading from "./Loading";
+import SignUp from "./UserInfo";
 
 function UserDetail() {
     const { id } = useParams<{ id: string }>(); // get the 'id' parameter from the route
@@ -17,11 +19,11 @@ function UserDetail() {
             })
     }, [id])
 
-    if (!userData) return <div>Loading...</div>
+    if (!userData) return <Loading />
 
     return (
         <>
-            <h1>User Details:</h1>
+            {/* <h1>User Details:</h1>
             <p>Name: {userData.first_name} {userData.last_name}</p>
             <p>Email: {userData.email}</p>
             <img src={userData.avatar} alt={userData.first_name} />
@@ -29,7 +31,8 @@ function UserDetail() {
                 <div className="mt-5"><Link to={`/users/${id}/posts`}>See user posts</Link></div>
                 <div className="mt-5"><Link to={`/users/${id}/todos`}>See user tasks</Link></div>
                 <div className="mt-5"><Link to="/">Back to homepage</Link></div>
-            </div>
+            </div> */}
+            <SignUp id={userData.id} avatar={userData.avatar} first_name={userData.first_name} last_name={userData.last_name} email={userData.email} />
         </>
     )
 }

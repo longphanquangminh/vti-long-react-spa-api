@@ -14,6 +14,7 @@ import NoPage from './NoPage';
 import UserDetail from './UserDetail';
 import UserPosts from './UserPosts';
 import UserTasks from './UserTasks';
+import SignUp from "./UserInfo";
 
 function App() {
 
@@ -21,11 +22,13 @@ function App() {
     <>
       <BrowserRouter>
         <Header />
+        <div className='p-12'></div>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/users/:id" element={<UserDetail />} />
           <Route path="/users/:id/posts" element={<UserPosts />} />
           <Route path="/users/:id/todos" element={<UserTasks />} />
+          <Route path="/my-profile" element={<SignUp id={999} avatar={`https://avatars.githubusercontent.com/u/111166256`} first_name={`Long`} last_name={`Phan`} email={`phanquangminhlong@gmail.com`} />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
         <Footer />
