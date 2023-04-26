@@ -17,9 +17,11 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { RemoveScrollBar } from 'react-remove-scroll-bar';
+import RowCard from './UserSearchCard';
 
 const pages = ['Search'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings_not_login = ['Login', 'Sign up'];
 const settings_link = ['/my-profile', 'https://github.com/longphanquangminh', '/', '/'];
 
 interface Data {
@@ -38,6 +40,7 @@ const fetchData = async (page: number): Promise<Data[]> => {
 
 function ResponsiveAppBar() {
     const [data, setData] = useState<Data[]>([])
+    const [loggedIn,setLoggedIn] = useState(true)
     const [progress, setProgress] = useState(0)
     const [searchData, setSearchData] = useState<Data[]>([])
     const [searchLetters, setSearchLetters] = useState('')
@@ -57,7 +60,13 @@ function ResponsiveAppBar() {
                 allData = [...allData, ...newData];
                 page++;
             }
-
+            allData = [...allData, {
+                "id": 999,
+                "email": "phanquangminhlong@gmail.com",
+                "first_name": "Long",
+                "last_name": "Phan",
+                "avatar": "https://avatars.githubusercontent.com/u/111166256"
+              }]
             setData(allData);
         };
 
@@ -73,18 +82,11 @@ function ResponsiveAppBar() {
 
     useEffect(() => {
         setProgress(0); // Reset the progress value
-        setSearchData([{
-            "id": 999,
-            "email": "phanquangminhlong@gmail.com",
-            "first_name": "Long",
-            "last_name": "Phan",
-            "avatar": "https://avatars.githubusercontent.com/u/111166256"
-          }]);
+        setSearchData([]);
     
         const filteredData = data.filter((item: any) =>
-            item.first_name?.toLowerCase().includes(searchLetters.toLowerCase()) ||
-            item.email?.toLowerCase().includes(searchLetters.toLowerCase()) ||
-            item.last_name?.toLowerCase().includes(searchLetters.toLowerCase())
+            (item.first_name + " " + item.last_name)?.toLowerCase().includes(searchLetters.toLowerCase()) ||
+            item.email?.toLowerCase().includes(searchLetters.toLowerCase())
         );
     
         const totalItems = filteredData.length;
@@ -101,6 +103,7 @@ function ResponsiveAppBar() {
       }, [searchLetters]);
 
     const [showSearchBar, setShowSearchBar] = useState(false);
+    const [openUserSettings, setOpenUserSettings] = useState(true);
     const modalRef = useRef<HTMLDivElement>(null)
     const modalRef2 = useRef<HTMLDivElement>(null)
     const handleClickOutside = (e: MouseEvent) => {
@@ -123,6 +126,7 @@ function ResponsiveAppBar() {
     };
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
+        setOpenUserSettings(true);
     };
 
     const handleCloseNavMenu = () => {
@@ -132,6 +136,7 @@ function ResponsiveAppBar() {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+        setOpenUserSettings(false);
     };
 
     return (<>
@@ -232,10 +237,11 @@ function ResponsiveAppBar() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="https://avatars.githubusercontent.com/u/111166256" />
+                                <Avatar alt="Remy Sharp" src={loggedIn ? "https://avatars.githubusercontent.com/u/111166256" : ""} />
                             </IconButton>
                         </Tooltip>
                         <Menu
+                        className={openUserSettings ? "" : "hidden"}
                             sx={{ mt: '45px' }}
                             id="menu-appbar"
                             anchorEl={anchorElUser}
@@ -251,8 +257,15 @@ function ResponsiveAppBar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting, index) => (
-                                (<Link target={`${settings_link[index].includes("http") ? "_blank" : ""}`} to={settings_link[index]}>
+                            {loggedIn && settings.map((setting, index) => (
+                                (<Link onClick={settings[index] == "Logout" ? () => {setLoggedIn(false)} : () => {}} target={`${settings_link[index].includes("http") ? "_blank" : ""}`} to={settings_link[index]}>
+                                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                        <Typography textAlign="center">{setting}</Typography>
+                                    </MenuItem>
+                                </Link>)
+                            ))}
+                            {!loggedIn && settings_not_login.map((setting) => (
+                                (<Link onClick={() => setLoggedIn(true)} to="/">
                                     <MenuItem key={setting} onClick={handleCloseUserMenu}>
                                         <Typography textAlign="center">{setting}</Typography>
                                     </MenuItem>
@@ -324,7 +337,14 @@ function ResponsiveAppBar() {
                             <div className="overflow-y-auto h-96">
                             {searchData.length > 0 ? (
                                 searchData.map((item: any, index) => {
-                                    return (<Link className='grid m-5 hover:text-blue-800' onClick={() => { setShowSearchBar(false); setSearchLetters('') }} to={item.id == 999 ? `/my-profile` : `/users/${item.id}`}>{index + 1}. {item.first_name + " " + item.last_name} ({item.email})</Link>)
+                                    return (<Link className='grid m-5 hover:text-blue-800' onClick={() => { setShowSearchBar(false); setSearchLetters('') }} to={item.id == 999 ? `/my-profile` : `/users/${item.id}`}>
+                                        <RowCard
+                                            userSearchAvatar={item.avatar}
+                                            userSearchFirstName={item.first_name}
+                                            userSearchLastName={item.last_name}
+                                            userSearchEmail={item.email}
+                                        />
+                                    </Link>)
                                 })
                             ) : (
                                 <p>No results could be found</p>

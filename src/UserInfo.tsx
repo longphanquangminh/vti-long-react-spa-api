@@ -72,8 +72,9 @@ export default function SignUp(props: Props) {
           }}
         >
           <BadgeAvatars className='mb-5' srcAvatar={`${props.avatar}`} altAvatar={props.first_name} />
+          {/* <Avatar alt={props.altAvatar ? props.altAvatar : `defaultAltAvatar`} src={props.srcAvatar ? props.srcAvatar : `https://lh3.googleusercontent.com/a/default-user`} /> */}
           <Typography component="h1" variant="h5">
-            User Information
+            {props.id == 999 ? `My information` : `User Information`}
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
             <Grid container spacing={2}>
