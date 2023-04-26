@@ -84,6 +84,7 @@ export default function RecipeReviewCard(props: Props) {
   const month = date.getMonth() + 1; // Add 1 because getMonth() returns 0-based index
   const year = date.getFullYear();
   const [expanded, setExpanded] = React.useState(false);
+  const [heart, setHeart] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -124,9 +125,11 @@ export default function RecipeReviewCard(props: Props) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
+        <div onClick={() => setHeart(!heart)}>
+          <IconButton color={!heart ? `default` : `error`} aria-label="add to favorites">
+            <FavoriteIcon />
+          </IconButton>
+        </div>
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>

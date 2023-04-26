@@ -346,7 +346,7 @@ function ResponsiveAppBar() {
                             </div>
                             <div className="overflow-y-auto h-96">
                             {searchData.length > 0 ? (
-                                searchData.map((item: any, index) => {
+                                searchData.slice(0, 4).map((item: any, index) => {
                                     return (<Link className='grid m-5 hover:text-blue-800' onClick={() => { setShowSearchBar(false); setSearchLetters('') }} to={item.id == 999 ? `/my-profile` : `/users/${item.id}`}>
                                         <RowCard
                                             userSearchId={item.id}

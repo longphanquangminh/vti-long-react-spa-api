@@ -9,7 +9,7 @@ function UserCard(props: any) {
 
   return (
     <>
-      <Link to={`/users/${props.id}`} key={props.id} className="m-5 text-center">
+      <Link to={props.id == 999 ? `/my-profile` : `/users/${props.id}`} key={props.id} className="m-5 text-center">
         <Card>
           <CardActionArea>
             <CardMedia
