@@ -166,7 +166,7 @@ function ResponsiveAppBar() {
                             textDecoration: 'none',
                         }}
                     >
-                        <Link to="/">LOGO</Link>
+                        <Link to="/">MLUMS</Link>
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -222,7 +222,7 @@ function ResponsiveAppBar() {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        MLUMS
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
@@ -309,7 +309,7 @@ function ResponsiveAppBar() {
                                                 }}
                                                 className="mr-3 w-full appearance-none border-none bg-transparent py-1 px-2 leading-tight text-gray-700 focus:outline-none"
                                                 type="text"
-                                                placeholder="Search..."
+                                                placeholder="Search user..."
                                                 aria-label="Search product(s)"
                                             />
                                         </div>
@@ -333,10 +333,11 @@ function ResponsiveAppBar() {
                                     {searchData.length > 0 ? <p>{searchData.length} results</p> : <p>Users</p>}
                                     {searchData.length > 0 ? (
                                         <Link
-                                            to="/category"
+                                            to={`/search/${searchLetters}`}
+                                            className="cursor-pointer hover:underline"
                                             onClick={() => setShowSearchBar(false)}
                                         >
-                                            {/* View all */}
+                                            View all
                                         </Link>
                                     ) : (
                                         <></>
