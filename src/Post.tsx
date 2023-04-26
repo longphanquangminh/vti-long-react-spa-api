@@ -19,7 +19,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import BadgeAvatars from './UserAvatar';
 import TextareaDecorators from './CommentBox';
-
+import Loading from './Loading';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -37,12 +39,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 type Props = {
     userId: number,
-    userFirstName: string,
-    userLastName: string,
-    userEmail: string,
-    userAvatar: string,
     postId: number,
-    postOrder: number,
     postTitle: string,
     postBody: string
 }
@@ -50,6 +47,7 @@ type Props = {
 export default function RecipeReviewCard(props: Props) {
     const [postComments, setPostComments] = useState<any>()
     const [postPhoto, setPostPhoto] = useState<any>()
+    const [postUserData, setPostUserData] = useState<any>()
     useEffect(() => {
         axios
             .get(`https://jsonplaceholder.typicode.com/posts/${props.postId}/comments`)
@@ -61,15 +59,25 @@ export default function RecipeReviewCard(props: Props) {
             })
     }, [props.postId])
     useEffect(() => {
-        axios
-            .get(`https://jsonplaceholder.typicode.com/photos/${props.postId}`)
-            .then((res) => {
-                setPostPhoto(res.data)
-            })
-            .catch((err) => {
-                console.warn(err)
-            })
-    }, [props.postId])
+      axios
+          .get(`https://jsonplaceholder.typicode.com/photos/${props.postId}`)
+          .then((res) => {
+              setPostPhoto(res.data)
+          })
+          .catch((err) => {
+              console.warn(err)
+          })
+  }, [props.postId])
+  useEffect(() => {
+    axios
+        .get(`https://reqres.in/api/users/${props.userId}`)
+        .then((res) => {
+          setPostUserData(res.data.data)
+        })
+        .catch((err) => {
+            console.warn(err)
+        })
+}, [props.postId])
     const today = new Date().toLocaleDateString('vi-VN');
     const date = new Date();
   const day = date.getDate();
@@ -80,21 +88,25 @@ export default function RecipeReviewCard(props: Props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  if (!postComments || !postPhoto || !postUserData) return <div className='m-5'>
+    <Skeleton height={220} />
+    <Skeleton height={110} />
+    <Skeleton height={110} />
+    </div>
   return (
-    <div className="m-5 flex justify-center">
+    <div className="flex justify-center mb-10">
         <Card sx={{width: 1145}}>
       <CardHeader
         avatar={
         //   <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src={props.userAvatar} />
-        <Link to={`/users/${props.userId}`}><BadgeAvatars srcAvatar={props.userAvatar} altAvatar={props.userFirstName} /></Link>
+        <Link to={`/users/${props.userId}`}><BadgeAvatars srcAvatar={postUserData.avatar} altAvatar={postUserData.first_name} /></Link>
         }
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
-        title={<><Link className='hover:underline' to ={`/users/${props.userId}`}>{props.userFirstName + " " + props.userLastName}</Link></>}
+        title={<><Link className='hover:underline' to ={`/users/${props.userId}`}>{postUserData.first_name + " " + postUserData.last_name}</Link></>}
         subheader={`${date}`}
       />
       <CardMedia
@@ -105,7 +117,7 @@ export default function RecipeReviewCard(props: Props) {
       />
       <CardContent>
          <Typography variant="h5" component="div">
-          {"Title post " + props.postOrder + ": " + props.postTitle}
+          {"Title: " + props.postTitle}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {"Content: " + props.postBody}
@@ -137,7 +149,7 @@ export default function RecipeReviewCard(props: Props) {
             ))}
         </CardContent>
       </Collapse>
-      <TextareaDecorators userEmail={props.userEmail} />
+      <TextareaDecorators />
     </Card>
     </div>
   );

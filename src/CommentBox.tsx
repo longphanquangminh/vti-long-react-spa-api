@@ -7,11 +7,7 @@ import Button from '@mui/joy/Button';
 import FormControl from '@mui/joy/FormControl';
 import BasicPopover, { OnDataCallback } from './SendCommentButton';
 
-type Props = {
-    userEmail?: string
-}
-
-export default function TextareaDecorators(props: Props) {
+export default function TextareaDecorators() {
   const [text, setText] = React.useState('');
   const [comments, setComments] = React.useState('');
   const addEmoji = (emoji: string) => () => setText(`${text}${emoji}`);

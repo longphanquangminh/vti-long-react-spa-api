@@ -42,13 +42,8 @@ function UserPosts() {
                     return (
                         <>
                             <RecipeReviewCard
-                                userId={userInfo.id}
-                                userFirstName={userInfo.first_name}
-                                userLastName={userInfo.last_name}
-                                userAvatar={userInfo.avatar}
-                                userEmail={userInfo.email}
+                                userId={post.userId}
                                 postId={post.id}
-                                postOrder={Math.abs(index - userPost.length)}
                                 postTitle={post.title}
                                 postBody={post.body}
                             />
