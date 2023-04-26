@@ -73,7 +73,13 @@ function ResponsiveAppBar() {
 
     useEffect(() => {
         setProgress(0); // Reset the progress value
-        setSearchData([]);
+        setSearchData([{
+            "id": 999,
+            "email": "phanquangminhlong@gmail.com",
+            "first_name": "Long",
+            "last_name": "Phan",
+            "avatar": "https://avatars.githubusercontent.com/u/111166256"
+          }]);
     
         const filteredData = data.filter((item: any) =>
             item.first_name?.toLowerCase().includes(searchLetters.toLowerCase()) ||
@@ -131,6 +137,7 @@ function ResponsiveAppBar() {
     return (<>
         <LoadingBar
             color={'indigo'}
+            height={5}
             progress={progress}
             onLoaderFinished={() => setProgress(0)}
         />
@@ -317,7 +324,7 @@ function ResponsiveAppBar() {
                             <div className="overflow-y-auto h-96">
                             {searchData.length > 0 ? (
                                 searchData.map((item: any, index) => {
-                                    return (<Link className='grid m-5 hover:text-blue-800' onClick={() => { setShowSearchBar(false); setSearchLetters('') }} to={`/users/${item.id}`}>{index + 1}. {item.first_name + " " + item.last_name} ({item.email})</Link>)
+                                    return (<Link className='grid m-5 hover:text-blue-800' onClick={() => { setShowSearchBar(false); setSearchLetters('') }} to={item.id == 999 ? `/my-profile` : `/users/${item.id}`}>{index + 1}. {item.first_name + " " + item.last_name} ({item.email})</Link>)
                                 })
                             ) : (
                                 <p>No results could be found</p>

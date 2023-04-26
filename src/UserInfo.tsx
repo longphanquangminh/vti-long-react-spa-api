@@ -126,7 +126,7 @@ export default function SignUp(props: Props) {
                 variant="contained"
                 sx={{ mt: 2, mb: 2 }}
                 >
-                SEE USER TASKS
+                {props.id == 999 ? `SEE MY TASKS` : `SEE USER TASKS`}
                 </ColorButton>
             </ReactLink>
             <ReactLink to={`/users/${props.id}/posts`}>
@@ -135,7 +135,7 @@ export default function SignUp(props: Props) {
                 variant="contained"
                 sx={{ mt: 2, mb: 2 }}
                 >
-                SEE USER POSTS
+                {props.id == 999 ? `SEE MY POSTS` : `SEE USER POSTS`}
                 </ColorButton>
             </ReactLink>
         </Box>
