@@ -34,7 +34,7 @@ function UserPosts() {
 
     return (
         <>
-            <div className="fixed top-20 left-5 z-50">
+        <div className="absolute top-20 left-5 z-30">
             <BackPageButton id={id} />
         </div>
             <div className="my-10">

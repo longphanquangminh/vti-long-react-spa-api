@@ -2,6 +2,7 @@ import * as React from 'react';
 import LoadingBar from 'react-top-loading-bar';
 import axios from 'axios'
 import { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -44,6 +45,7 @@ function ResponsiveAppBar() {
     const [progress, setProgress] = useState(0)
     const [searchData, setSearchData] = useState<Data[]>([])
     const [searchLetters, setSearchLetters] = useState('')
+    const location = useLocation()
     useEffect(() => {
         const getData = async () => {
             let page = 1;
@@ -232,6 +234,13 @@ function ResponsiveAppBar() {
                                 {page}
                             </Button>
                         ))}
+                        <Link to={"/news"}>
+                        <Button
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            NEWSFEED
+                        </Button>
+                        </Link>
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>

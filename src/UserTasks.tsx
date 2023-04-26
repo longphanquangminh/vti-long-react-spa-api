@@ -17,6 +17,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import SaveIcon from '@mui/icons-material/Save';
 import SendIcon from '@mui/icons-material/Send';
+import LoadingMyButton from './LoadingMyButton';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -58,7 +59,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 function UserTasks() {
     const { id } = useParams<{ id: string }>(); // get the 'id' parameter from the route
-    const [loading, setLoading] = useState(false);
     const [userTask, setUserTask] = useState<any>()
     const [render, setRender] = useState(false)
     useEffect(() => {
@@ -73,21 +73,30 @@ function UserTasks() {
     }, [id])
 
     const markDone = (taskId: any) => {
-        axios
-            .patch(`https://jsonplaceholder.typicode.com/todos/${taskId}`, {
-                completed: true
-            })
-            .then((response) => {
-                userTask.find((item: any) => item.id == taskId).completed = response.data.completed
-                setLoading(false)
-                setRender(!render)
-            });
-    }
+      axios
+          .patch(`https://jsonplaceholder.typicode.com/todos/${taskId}`, {
+              completed: true
+          })
+          .then((response) => {
+              userTask.find((item: any) => item.id == taskId).completed = response.data.completed
+              setRender(!render)
+          });
+  }
+  const markUndone = (taskId: any) => {
+    axios
+        .patch(`https://jsonplaceholder.typicode.com/todos/${taskId}`, {
+            completed: false
+        })
+        .then((response) => {
+            userTask.find((item: any) => item.id == taskId).completed = response.data.completed
+            setRender(!render)
+        });
+}
     if (!userTask) return <Loading />
 
     return (
         <>
-        <div className="fixed top-20 left-5 z-50">
+        <div className="absolute top-20 left-5 z-30">
             <BackPageButton id={id} />
         </div>
             <div className="m-10">
@@ -118,17 +127,9 @@ function UserTasks() {
               </StyledTableCell>
               <StyledTableCell align="left">{task.id}</StyledTableCell>
               <StyledTableCell align="left">{task.title}</StyledTableCell>
-              <StyledTableCell align="left"><LoadingButton
-          size="small"
-          color="secondary"
-          onClick={() => {markDone(task.id); setLoading(true)}}
-          loading={loading}
-          loadingPosition="start"
-          startIcon={<SaveIcon />}
-          variant="contained"
-        >
-          <span>Save</span>
-        </LoadingButton></StyledTableCell>
+              <StyledTableCell align="left">
+                <LoadingMyButton contentButton="Done" onClick={() => {markDone(task.id)}} />
+              </StyledTableCell>
             </StyledTableRow>
                     )
                 })}
@@ -157,17 +158,9 @@ function UserTasks() {
               </StyledTableCell>
               <StyledTableCell align="left">{task.id}</StyledTableCell>
               <StyledTableCell align="left">{task.title}</StyledTableCell>
-              <StyledTableCell align="left"><LoadingButton
-          size="small"
-          color="secondary"
-          onClick={() => {markDone(task.id); setLoading(true)}}
-          loading={loading}
-          loadingPosition="start"
-          startIcon={<SaveIcon />}
-          variant="contained"
-        >
-          <span>Save</span>
-        </LoadingButton></StyledTableCell>
+              <StyledTableCell align="left">
+                <LoadingMyButton contentButton="Undone" onClick={() => {markUndone(task.id)}} />
+              </StyledTableCell>
             </StyledTableRow>
                     )
                 })}
