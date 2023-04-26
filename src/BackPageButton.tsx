@@ -8,8 +8,9 @@ type Props = {
 
 export default function BackPageButton(props: Props) {
     const location = useLocation();
+    const linkChange = props.id != "999" ? `/users/${props.id}` : `/my-profile`;
     return (
-        <Link to={`${location.pathname.includes('posts') || location.pathname.includes('todos') ? `/users/${props.id}` : `/`}`}>
+        <Link to={`${location.pathname.includes('posts') || location.pathname.includes('todos') ? linkChange : `/`}`}>
             <Button className={`${location.pathname.includes('users') || location.pathname.includes('my-profile') ? "" : "invisible"}`} variant="soft" startDecorator={<KeyboardArrowLeft />}>
                 {location.pathname.includes('posts') || location.pathname.includes('todos') ? "User Detail" : "Home Page"}
             </Button>

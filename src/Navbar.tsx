@@ -318,7 +318,7 @@ function ResponsiveAppBar() {
                         />
                     </div>
                     {searchLetters && (
-                        <div className="mx-5 my-10">
+                        <div className="">
                             <div className="mb-5 border-b-[2px] border-indigo-500 pb-2">
                                 <div className="flex justify-between">
                                     {searchData.length > 0 ? <p>{searchData.length} results</p> : <p>Users</p>}

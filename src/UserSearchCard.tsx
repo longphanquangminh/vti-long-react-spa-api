@@ -5,6 +5,7 @@ import CardContent from '@mui/joy/CardContent';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Divider from '@mui/joy/Divider';
 import Typography from '@mui/joy/Typography';
+import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 
 type Props = {
     userSearchId: number,
@@ -19,9 +20,23 @@ export default function RowCard(props: Props) {
     <Card
       orientation="horizontal"
       variant="outlined"
+      className="w-full"
       sx={{ bgcolor: 'background.body' }}
     >
       <CardOverflow>
+      {/* <BrowserView>
+      <AspectRatio ratio="1" sx={{ width: 90 }}>
+          <img
+            src={props.userSearchAvatar ? props.userSearchAvatar : `https://lh3.googleusercontent.com/a/default-user`}
+            loading="lazy"
+            alt=""
+          />
+        </AspectRatio>
+</BrowserView> */}
+        
+      </CardOverflow>
+      <CardContent sx={{ px: 2 }}>
+        <Typography fontWeight="md" textColor="success.plainColor" mb={0.5}>
         <AspectRatio ratio="1" sx={{ width: 90 }}>
           <img
             src={props.userSearchAvatar ? props.userSearchAvatar : `https://lh3.googleusercontent.com/a/default-user`}
@@ -29,9 +44,6 @@ export default function RowCard(props: Props) {
             alt=""
           />
         </AspectRatio>
-      </CardOverflow>
-      <CardContent sx={{ px: 2 }}>
-        <Typography fontWeight="md" textColor="success.plainColor" mb={0.5}>
           {props.userSearchFirstName + " " + props.userSearchLastName}
         </Typography>
         <Typography level="body2">{props.userSearchEmail}</Typography>

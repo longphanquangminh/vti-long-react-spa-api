@@ -1,10 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/joy/Box';
 import IconButton from '@mui/joy/IconButton';
-import Textarea from '@mui/joy/Textarea';
 import Typography from '@mui/joy/Typography';
+import Textarea from '@mui/joy/Textarea';
 import Button from '@mui/joy/Button';
 import FormControl from '@mui/joy/FormControl';
+import BasicPopover, { OnDataCallback } from './SendCommentButton';
 
 type Props = {
     userEmail?: string
@@ -12,9 +13,14 @@ type Props = {
 
 export default function TextareaDecorators(props: Props) {
   const [text, setText] = React.useState('');
+  const [comments, setComments] = React.useState('');
   const addEmoji = (emoji: string) => () => setText(`${text}${emoji}`);
+  const handleDataFromChild: OnDataCallback = (data: string) => {
+    setComments(data);
+  };
   return (
-    <FormControl>
+    <>
+        <FormControl>
         <Textarea placeholder="Your email..." sx={{ mb: 1 }} defaultValue={"phanquangminhlong@gmail.com" || ""} />
         <Textarea
           placeholder="Type your comment in here…"
@@ -45,10 +51,14 @@ export default function TextareaDecorators(props: Props) {
             <><Typography level="body3" sx={{ ml: 'auto' }}>
             {text.length} character{text.length > 1 ? `s` : ``}
           </Typography>
-    <Button sx={{ ml: 'auto' }} onClick={() => {setText('')}}>Send</Button></>
+          <BasicPopover commentContent={text} className='ml-auto' onClick={() => {}} onData={handleDataFromChild} />
+          {/* <BasicPopover onData={handleDataFromChild} commentContent={text} className='ml-auto' onClick={() => {}} /> */}
+</>
     }
           sx={{ minWidth: 300 }}
         />
+
     </FormControl>
+    </>
   );
 }
