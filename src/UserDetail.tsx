@@ -30,7 +30,6 @@ function UserDetail() {
             <div className="ml-5">
                 <div className="mt-5"><Link to={`/users/${id}/posts`}>See user posts</Link></div>
                 <div className="mt-5"><Link to={`/users/${id}/todos`}>See user tasks</Link></div>
-                <div className="mt-5"><Link to="/">Back to homepage</Link></div>
             </div> */}
             <SignUp id={userData.id} avatar={userData.avatar} first_name={userData.first_name} last_name={userData.last_name} email={userData.email} />
         </>

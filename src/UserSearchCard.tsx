@@ -7,6 +7,7 @@ import Divider from '@mui/joy/Divider';
 import Typography from '@mui/joy/Typography';
 
 type Props = {
+    userSearchId: number,
     userSearchAvatar: string,
     userSearchFirstName: string,
     userSearchLastName: string,
@@ -38,7 +39,7 @@ export default function RowCard(props: Props) {
       <Divider />
       <CardOverflow
         variant="soft"
-        color="primary"
+        color={props.userSearchId == 999 ? `warning` : `primary`}
         sx={{
           px: 0.2,
           writingMode: 'vertical-rl',
@@ -49,7 +50,7 @@ export default function RowCard(props: Props) {
           textTransform: 'uppercase',
         }}
       >
-        Online
+        {props.userSearchId == 999 ? `Offline` : `Online`}
       </CardOverflow>
     </Card>
   );

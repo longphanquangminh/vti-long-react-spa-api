@@ -1,3 +1,4 @@
+import BackPageButton from "./BackPageButton";
 import { useState, useEffect } from "react"
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios'
@@ -32,6 +33,10 @@ function UserTasks() {
 
     return (
         <>
+        <div className="fixed top-20 left-5 z-50">
+            <BackPageButton id={id} />
+        </div>
+            <div className="m-10">
             {userTask.length == 0 ? (
                 <p>No tasks found!</p>
             ) : (
@@ -55,9 +60,10 @@ function UserTasks() {
                 <br />
                 <p>Done {[].concat(...userTask).filter((item: any) => item.completed == true).length} / {[].concat(...userTask).length} tasks</p>
                 <br />
-                <Link to={`/`}>Back to Homepage</Link>
+                {/* <Link to={`/`}>Back to Homepage</Link> */}
                 </>
             )}
+            </div>
         </>
     )
 }

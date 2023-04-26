@@ -1,3 +1,4 @@
+import BackPageButton from "./BackPageButton";
 import { useState, useEffect } from "react"
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios'
@@ -45,12 +46,16 @@ function UserPosts() {
     return (
         <>
             {/* <h1>User Posts:</h1> */}
-            <div className="my-5">
+            <div className="fixed top-20 left-5 z-50">
+            <BackPageButton id={id} />
+        </div>
+            <div className="my-10">
                 {userPost.length > 0 ? userPost.map((post: any, index: any) => {
                     return (
                         <>
                             {/* <p key={post.id} id={post.id}>{index + 1}. {post.title}</p> */}
                             <RecipeReviewCard
+                                userId={userInfo.id}
                                 userFirstName={userInfo.first_name}
                                 userLastName={userInfo.last_name}
                                 userAvatar={userInfo.avatar}
@@ -64,7 +69,7 @@ function UserPosts() {
                     )
                 }) : (<p>No posts found!</p>)}
             </div>
-            <Link to={id == String(999) ? `/my-profile` : `/users/${id}`}>{`Back to ${id == String(999) ? "my profile" : "user page"}`}</Link>
+            {/* <Link to={id == String(999) ? `/my-profile` : `/users/${id}`}>{`Back to ${id == String(999) ? "my profile" : "user page"}`}</Link> */}
         </>
     )
 }

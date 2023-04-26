@@ -1,3 +1,4 @@
+import BackPageButton from "./BackPageButton";
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
@@ -105,7 +106,9 @@ function Header() {
       <div className="fixed z-50 w-screen">
         <ResponsiveAppBar />
       </div>
-
+      {/* <div className="fixed top-20 left-5 z-50">
+            <BackPageButton />
+        </div> */}
       {changeNavbarColor && (
         <button
           title="button"

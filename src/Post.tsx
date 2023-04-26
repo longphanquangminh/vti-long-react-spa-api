@@ -36,6 +36,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 type Props = {
+    userId: number,
     userFirstName: string,
     userLastName: string,
     userEmail: string,
@@ -86,14 +87,14 @@ export default function RecipeReviewCard(props: Props) {
       <CardHeader
         avatar={
         //   <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src={props.userAvatar} />
-        <BadgeAvatars srcAvatar={props.userAvatar} altAvatar={props.userFirstName} />
+        <Link to={`/users/${props.userId}`}><BadgeAvatars srcAvatar={props.userAvatar} altAvatar={props.userFirstName} /></Link>
         }
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
-        title={`${props.userFirstName + " "} ${props.userLastName}`}
+        title={<><Link className='hover:underline' to ={`/users/${props.userId}`}>{props.userFirstName + " " + props.userLastName}</Link></>}
         subheader={`${date}`}
       />
       <CardMedia

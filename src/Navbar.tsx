@@ -339,6 +339,7 @@ function ResponsiveAppBar() {
                                 searchData.map((item: any, index) => {
                                     return (<Link className='grid m-5 hover:text-blue-800' onClick={() => { setShowSearchBar(false); setSearchLetters('') }} to={item.id == 999 ? `/my-profile` : `/users/${item.id}`}>
                                         <RowCard
+                                            userSearchId={item.id}
                                             userSearchAvatar={item.avatar}
                                             userSearchFirstName={item.first_name}
                                             userSearchLastName={item.last_name}
