@@ -12,6 +12,7 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import Typography2 from '@mui/joy/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
@@ -22,6 +23,13 @@ import TextareaDecorators from './CommentBox';
 import Loading from './Loading';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import Box from '@mui/joy/Box';
+import IconButton2 from '@mui/joy/IconButton';
+import Input from '@mui/joy/Input';
+import Textarea from '@mui/joy/Textarea';
+import Button from '@mui/material/Button';
+import FormControl from '@mui/joy/FormControl';
+import Popover from '@mui/material/Popover';
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -89,6 +97,40 @@ export default function RecipeReviewCard(props: Props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  const [emailSend, setEmailSend] = React.useState('phanquangminhlong@gmail.com');
+  const [emailTemp, setEmailTemp] = React.useState('');
+  const [text, setText] = React.useState('');
+  const [commentTemp, setCommentTemp] = React.useState('');
+  const addEmoji = (emoji: string) => () => setText(`${text}${emoji}`);
+  
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+      setEmailTemp(emailSend);
+      setCommentTemp(text);
+    //   if(emailSend && text) {
+    //     setPostComments([...postComments, {postId: props.postId, id: postComments.length + 1, name: "1", email: emailSend, body: text}])
+    //     setEmailSend('phanquangminhlong@gmail.com');
+    //     setText('');
+    // }
+    if(text) {
+      setPostComments([...postComments, {postId: props.postId, id: postComments.length + 1, name: "1", email: "Long Phan", body: text}])
+      setEmailSend('phanquangminhlong@gmail.com');
+      setText('');
+  }
+  }
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
+  const handleComment = () => {
+    setPostComments([...postComments, {postId: props.postId, id: postComments.length + 1, name: "1", email: "a", body: text}])
+  };
+
   if (!postComments || !postPhoto || !postUserData) return <div className='m-5'>
     <Skeleton height={220} />
     <Skeleton height={110} />
@@ -152,7 +194,62 @@ export default function RecipeReviewCard(props: Props) {
             ))}
         </CardContent>
       </Collapse>
-      <TextareaDecorators />
+      <FormControl>
+        {/* <Input type="email" onChange={(event) => {setEmailSend(event.target.value)}} placeholder="Your email..." sx={{ mb: 1 }} defaultValue={emailSend} value={emailSend} /> */}
+        <Textarea
+          placeholder="Type your comment in here…"
+          value={text}
+          onChange={(event) => {setText(event.target.value)}}
+          minRows={4}
+          maxRows={4}
+          startDecorator={
+            <Box sx={{ display: 'flex', gap: 0.5 }}>
+              <IconButton2 variant="outlined" color="neutral" onClick={addEmoji('👍')}>
+                👍
+              </IconButton2>
+              <IconButton2 variant="outlined" color="neutral" onClick={addEmoji('🏖')}>
+                🏖
+              </IconButton2>
+              <IconButton2 variant="outlined" color="neutral" onClick={addEmoji('😍')}>
+                😍
+              </IconButton2>
+              <IconButton2 variant="outlined" color="neutral" onClick={addEmoji('🐆')}>
+                🐆
+              </IconButton2>
+              <IconButton2 variant="outlined" color="neutral" onClick={addEmoji('🐧')}>
+                🐧
+              </IconButton2>
+            </Box>
+          }
+          endDecorator={
+            <>
+              <Typography2 level="body3" sx={{ ml: 'auto' }}>
+            {text.length} character{text.length > 1 ? `s` : ``}
+          </Typography2>
+          <div className="ml-auto">
+            <Button aria-describedby={id} variant="contained" onClick={handleClick}>
+              Send
+            </Button>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        {/* <Typography2 sx={{ p: 2 }}>{emailTemp && commentTemp ? "Your comment has been sent." : "Please write comment & email."}</Typography2> */}
+        <Typography2 sx={{ p: 2 }}>{commentTemp ? "Your comment has been sent." : "Please write comment."}</Typography2>
+      </Popover></div>
+            </>
+          
+        }
+          
+          ></Textarea>
+
+    </FormControl>
     </Card>
     </div>
   );

@@ -46,7 +46,7 @@ export default function SearchResult() {
             "email": "phanquangminhlong@gmail.com",
             "first_name": "Long",
             "last_name": "Phan",
-            "avatar": "https://avatars.githubusercontent.com/u/111166256"
+            "avatar": "https://longphanquangminh.github.io/Long-Phan-Resume/images/logoML.png"
           }]
         setData(allData);
     };

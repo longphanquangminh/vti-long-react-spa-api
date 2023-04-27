@@ -32,7 +32,7 @@ function App() {
           <Route path="/users/:id/todos" element={<UserTasks />} />
           <Route path="/news" element={<NewsFeed />} />
           <Route path="/search/:letters" element={<SearchResult />} />
-          <Route path="/my-profile" element={<SignUp id={999} avatar={`https://avatars.githubusercontent.com/u/111166256`} first_name={`Long`} last_name={`Phan`} email={`phanquangminhlong@gmail.com`} />} />
+          <Route path="/my-profile" element={<SignUp id={999} avatar={`https://longphanquangminh.github.io/Long-Phan-Resume/images/logoML.png`} first_name={`Long`} last_name={`Phan`} email={`phanquangminhlong@gmail.com`} />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
         <Footer />

@@ -67,7 +67,7 @@ function ResponsiveAppBar() {
                 "email": "phanquangminhlong@gmail.com",
                 "first_name": "Long",
                 "last_name": "Phan",
-                "avatar": "https://avatars.githubusercontent.com/u/111166256"
+                "avatar": "https://longphanquangminh.github.io/Long-Phan-Resume/images/logoML.png"
               }]
             setData(allData);
         };
@@ -246,7 +246,7 @@ function ResponsiveAppBar() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src={loggedIn ? "https://avatars.githubusercontent.com/u/111166256" : ""} />
+                                <Avatar alt="Remy Sharp" src={loggedIn ? "https://longphanquangminh.github.io/Long-Phan-Resume/images/logoML.png" : ""} />
                             </IconButton>
                         </Tooltip>
                         <Menu

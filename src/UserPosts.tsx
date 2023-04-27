@@ -38,7 +38,7 @@ function UserPosts() {
             <BackPageButton id={id} />
         </div>
             <div className="my-10">
-                {userPost.length > 0 ? userPost.map((post: any, index: any) => {
+                {userPost.length > 0 ? userPost.slice(0, 5).map((post: any, index: any) => {
                     return (
                         <>
                             <RecipeReviewCard

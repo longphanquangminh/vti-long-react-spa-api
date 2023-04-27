@@ -2,6 +2,7 @@ import * as React from 'react';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { useState } from 'react'
 
 export type OnDataCallback = (data: string) => void;
 
@@ -14,10 +15,12 @@ interface Props {
 
 export default function BasicPopover(props: Props) {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const [commentTemp, setCommentTemp] = useState< string | undefined>('');
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
     props.onClick(event);
+    setCommentTemp(props.commentContent);
     props.onData('');
   };
 
@@ -43,7 +46,7 @@ export default function BasicPopover(props: Props) {
           horizontal: 'left',
         }}
       >
-        <Typography sx={{ p: 2 }}>{props.commentContent ? "Your comment has been sent." : "Please write comment & email."}</Typography>
+        <Typography sx={{ p: 2 }}>{commentTemp ? "Your comment has been sent." : "Please write comment & email."}</Typography>
       </Popover>
     </div>
   );
