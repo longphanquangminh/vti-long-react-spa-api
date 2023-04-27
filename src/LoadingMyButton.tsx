@@ -12,10 +12,10 @@ export default function LoadingMyButton(props: Props) {
         setLoading(true);
         setTimeout(() => {
           setLoading(false);
-          props.onClick(event);
-        }, 900);
+              }, 1000);
 
-    }
+              props.onClick(event);
+            }
     const [loading, setLoading] = useState(false);
 
     return (
@@ -25,6 +25,7 @@ export default function LoadingMyButton(props: Props) {
           color="secondary"
           onClick={handleLoad}
           loading={loading}
+          disabled={loading}
           loadingPosition="start"
           startIcon={<SaveIcon />}
           variant="contained"

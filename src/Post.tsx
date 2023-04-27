@@ -99,7 +99,7 @@ export default function RecipeReviewCard(props: Props) {
   };
   const [emailSend, setEmailSend] = React.useState('phanquangminhlong@gmail.com');
   const [emailTemp, setEmailTemp] = React.useState('');
-  const [text, setText] = React.useState('');
+  const [text, setText] = React.useState<any>('');
   const [commentTemp, setCommentTemp] = React.useState('');
   const addEmoji = (emoji: string) => () => setText(`${text}${emoji}`);
   
@@ -114,8 +114,9 @@ export default function RecipeReviewCard(props: Props) {
     //     setEmailSend('phanquangminhlong@gmail.com');
     //     setText('');
     // }
-    if(text) {
-      setPostComments([...postComments, {postId: props.postId, id: postComments.length + 1, name: "1", email: "Long Phan", body: text}])
+    if(text.trim()) {
+      const demotext = text.trim().replace(/[^\S\r\n]+/g, ' ').split('\n').map((line: string) => line.trim()).join('\n');
+      setPostComments([...postComments, {postId: props.postId, id: postComments.length + 1, name: "1", email: "Long Phan", body: demotext}])
       setEmailSend('phanquangminhlong@gmail.com');
       setText('');
   }
@@ -127,10 +128,14 @@ export default function RecipeReviewCard(props: Props) {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
-  const handleComment = () => {
-    setPostComments([...postComments, {postId: props.postId, id: postComments.length + 1, name: "1", email: "a", body: text}])
+  
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // prevent default behavior of Enter key
+      setText(text + "\n");
+      // .trim().replace(/(?<!\n)\s+/g, " ")
+    }
   };
-
   if (!postComments || !postPhoto || !postUserData) return <div className='m-5'>
     <Skeleton height={220} />
     <Skeleton height={110} />
@@ -163,7 +168,8 @@ export default function RecipeReviewCard(props: Props) {
           {"Title: " + props.postTitle}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {"Content: " + props.postBody}
+          <p>Content:</p>
+          <pre>{props.postBody}</pre>
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -188,8 +194,8 @@ export default function RecipeReviewCard(props: Props) {
         <CardContent>
         {postComments && postComments.map((comment: any) => (
               <Typography paragraph>
-              <p className='font-bold text-cyan-500'>{comment.email + " commented: "}</p>
-              <p>{comment.body}</p>
+              <p className='font-bold text-cyan-500'>{`${comment.email.includes("@") ? `${comment.email.substring(0, comment.email.indexOf("@")).replace(/[._]/g, " ").split(" ").length > 1 ? comment.email.substring(0, comment.email.indexOf("@")).replace(/[._]/g, " ") : comment.email.substring(0, comment.email.indexOf("@")).replace(/[._]/g, " ") + " Cena"}` : comment.email}` + " commented: "}</p>
+              <pre>{comment.body}</pre>
             </Typography>
             ))}
         </CardContent>
@@ -200,6 +206,7 @@ export default function RecipeReviewCard(props: Props) {
           placeholder="Type your comment in here…"
           value={text}
           onChange={(event) => {setText(event.target.value)}}
+          onKeyDown={handleKeyDown}
           minRows={4}
           maxRows={4}
           startDecorator={
@@ -241,7 +248,7 @@ export default function RecipeReviewCard(props: Props) {
         }}
       >
         {/* <Typography2 sx={{ p: 2 }}>{emailTemp && commentTemp ? "Your comment has been sent." : "Please write comment & email."}</Typography2> */}
-        <Typography2 sx={{ p: 2 }}>{commentTemp ? "Your comment has been sent." : "Please write comment."}</Typography2>
+        <Typography2 sx={{ p: 2 }}>{commentTemp.trim() ? "Your comment has been sent." : "Please write comment."}</Typography2>
       </Popover></div>
             </>
           

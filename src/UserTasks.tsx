@@ -107,7 +107,10 @@ function UserTasks() {
                     <h1>User Detailed Tasks:</h1>
                 <p>Done {[].concat(...userTask).filter((item: any) => item.completed == true).length} / {[].concat(...userTask).length} tasks</p>
                 <br />
-                <h2>Undone Tasks:</h2>
+
+                {userTask.filter((item: any) => item.completed == false).length > 0 && (
+                  <>
+<h2>Undone Tasks:</h2>
                 <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
@@ -136,9 +139,14 @@ function UserTasks() {
         </TableBody>
       </Table>
     </TableContainer>
+                  </>
+                )}
+                
                 
                 <br />
-                <h2>Done Tasks:</h2>
+                {userTask.filter((item: any) => item.completed == true).length > 0 && (
+                  <>
+<h2>Done Tasks:</h2>
                 <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
@@ -167,6 +175,9 @@ function UserTasks() {
         </TableBody>
       </Table>
     </TableContainer>
+                  </>
+                )}
+                
                 {/* <Link to={`/`}>Back to Homepage</Link> */}
                 </>
             )}
