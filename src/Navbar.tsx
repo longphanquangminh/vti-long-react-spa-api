@@ -41,7 +41,7 @@ const fetchData = async (page: number): Promise<Data[]> => {
 
 function ResponsiveAppBar() {
     const [data, setData] = useState<Data[]>([])
-    const [loggedIn,setLoggedIn] = useState(true)
+    const [loggedIn, setLoggedIn] = useState(true)
     const [progress, setProgress] = useState(0)
     const [searchData, setSearchData] = useState<Data[]>([])
     const [searchLetters, setSearchLetters] = useState('')
@@ -68,7 +68,7 @@ function ResponsiveAppBar() {
                 "first_name": "Long",
                 "last_name": "Phan",
                 "avatar": "https://longphanquangminh.github.io/Long-Phan-Resume/images/logoML.png"
-              }]
+            }]
             setData(allData);
         };
 
@@ -85,24 +85,24 @@ function ResponsiveAppBar() {
     useEffect(() => {
         setProgress(0); // Reset the progress value
         setSearchData([]);
-    
+
         const filteredData = data.filter((item: any) =>
             (item.first_name + " " + item.last_name)?.toLowerCase().includes(searchLetters.toLowerCase()) ||
             item.email?.toLowerCase().includes(searchLetters.toLowerCase())
         );
-    
+
         const totalItems = filteredData.length;
         let processedItems = 0;
-    
+
         filteredData.forEach((item, index) => {
             setSearchData(prevResults => [...prevResults, item]);
-            if(searchLetters != '') {
+            if (searchLetters != '') {
                 processedItems++;
-            const progressValue = Math.round((processedItems / totalItems) * 100);
-            setProgress(progressValue);
+                const progressValue = Math.round((processedItems / totalItems) * 100);
+                setProgress(progressValue);
             }
         });
-      }, [searchLetters]);
+    }, [searchLetters]);
 
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [openUserSettings, setOpenUserSettings] = useState(true);
@@ -235,22 +235,24 @@ function ResponsiveAppBar() {
                             </Button>
                         ))}
                         <Link to={"/news"}>
-                        <Button
-                            sx={{ my: 2, color: 'white', display: 'block' }}
-                        >
-                            NEWSFEED
-                        </Button>
+                            <Button
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                NEWSFEED
+                            </Button>
                         </Link>
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src={loggedIn ? "https://longphanquangminh.github.io/Long-Phan-Resume/images/logoML.png" : ""} />
+                                <div style={{ backgroundColor: "white", borderRadius: "50%" }}>
+                                    <Avatar style={{ objectFit: "cover" }} alt="Remy Sharp" src={loggedIn ? "https://longphanquangminh.github.io/Long-Phan-Resume/images/logoML.png" : ""} />
+                                </div>
                             </IconButton>
                         </Tooltip>
                         <Menu
-                        className={openUserSettings ? "" : "hidden"}
+                            className={openUserSettings ? "" : "hidden"}
                             sx={{ mt: '45px' }}
                             id="menu-appbar"
                             anchorEl={anchorElUser}
@@ -267,7 +269,7 @@ function ResponsiveAppBar() {
                             onClose={handleCloseUserMenu}
                         >
                             {loggedIn && settings.map((setting, index) => (
-                                (<Link onClick={settings[index] == "Logout" ? () => {setLoggedIn(false)} : () => {}} target={`${settings_link[index].includes("http") ? "_blank" : ""}`} to={settings_link[index]}>
+                                (<Link onClick={settings[index] == "Logout" ? () => { setLoggedIn(false) } : () => { }} target={`${settings_link[index].includes("http") ? "_blank" : ""}`} to={settings_link[index]}>
                                     <MenuItem key={setting} onClick={handleCloseUserMenu}>
                                         <Typography textAlign="center">{setting}</Typography>
                                     </MenuItem>
@@ -345,21 +347,21 @@ function ResponsiveAppBar() {
                                 </div>
                             </div>
                             <div className="overflow-y-auto h-96">
-                            {searchData.length > 0 ? (
-                                searchData.slice(0, 4).map((item: any, index) => {
-                                    return (<Link className='grid m-5 hover:text-blue-800' onClick={() => { setShowSearchBar(false); setSearchLetters('') }} to={item.id == 999 ? `/my-profile` : `/users/${item.id}`}>
-                                        <RowCard
-                                            userSearchId={item.id}
-                                            userSearchAvatar={item.avatar}
-                                            userSearchFirstName={item.first_name}
-                                            userSearchLastName={item.last_name}
-                                            userSearchEmail={item.email}
-                                        />
-                                    </Link>)
-                                })
-                            ) : (
-                                <p>No results could be found</p>
-                            )}
+                                {searchData.length > 0 ? (
+                                    searchData.slice(0, 4).map((item: any, index) => {
+                                        return (<Link className='grid m-5 hover:text-blue-800' onClick={() => { setShowSearchBar(false); setSearchLetters('') }} to={item.id == 999 ? `/my-profile` : `/users/${item.id}`}>
+                                            <RowCard
+                                                userSearchId={item.id}
+                                                userSearchAvatar={item.avatar}
+                                                userSearchFirstName={item.first_name}
+                                                userSearchLastName={item.last_name}
+                                                userSearchEmail={item.email}
+                                            />
+                                        </Link>)
+                                    })
+                                ) : (
+                                    <p>No results could be found</p>
+                                )}
                             </div>
                         </div>
                     )}
