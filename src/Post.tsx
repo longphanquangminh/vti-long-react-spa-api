@@ -30,6 +30,7 @@ import Textarea from '@mui/joy/Textarea';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/joy/FormControl';
 import Popover from '@mui/material/Popover';
+import { RemoveScrollBar } from 'react-remove-scroll-bar';
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -54,6 +55,8 @@ type Props = {
 
 export default function RecipeReviewCard(props: Props) {
     const [postComments, setPostComments] = useState<any>()
+    const [loadComments, setLoadComments] = useState<any>(0)
+    const loadLeft = 2
     const [postPhoto, setPostPhoto] = useState<any>()
     const [postUserData, setPostUserData] = useState<any>()
     useEffect(() => {
@@ -61,6 +64,7 @@ export default function RecipeReviewCard(props: Props) {
             .get(`https://jsonplaceholder.typicode.com/posts/${props.postId}/comments`)
             .then((res) => {
                 setPostComments(res.data)
+                setLoadComments(res.data.length)
             })
             .catch((err) => {
                 console.warn(err)
@@ -136,7 +140,8 @@ export default function RecipeReviewCard(props: Props) {
       // .trim().replace(/(?<!\n)\s+/g, " ")
     }
   };
-  if (!postComments || !postPhoto || !postUserData) return <div className='m-5'>
+  if (!postComments || !postPhoto || !postUserData || loadComments == 0) return <div className='m-5'>
+    <RemoveScrollBar />
     <Skeleton height={220} />
     <Skeleton height={110} />
     <Skeleton height={110} />
@@ -192,7 +197,9 @@ export default function RecipeReviewCard(props: Props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-        {postComments && postComments.map((comment: any) => (
+          {loadComments > (loadLeft + 1) && <button className='mb-5 cursor-pointer text-gray-500 hover:underline' onClick={() => {setLoadComments(loadComments - loadLeft);}}>Load {loadLeft} more comments</button>}
+          {(loadComments <= (loadLeft + 1) && loadComments > loadLeft) && <button className='mb-5 cursor-pointer text-gray-500 hover:underline' onClick={() => {setLoadComments(loadComments - 1);}}>Load 1 more comment</button>}
+        {postComments && postComments.slice(loadComments - loadLeft, postComments.length).map((comment: any) => (
               <Typography paragraph>
               <p className='font-bold text-cyan-500'>{`${comment.email.includes("@") ? `${comment.email.substring(0, comment.email.indexOf("@")).replace(/[._]/g, " ").split(" ").length > 1 ? comment.email.substring(0, comment.email.indexOf("@")).replace(/[._]/g, " ") : comment.email.substring(0, comment.email.indexOf("@")).replace(/[._]/g, " ") + " Cena"}` : comment.email}` + " commented: "}</p>
               <pre>{comment.body}</pre>
