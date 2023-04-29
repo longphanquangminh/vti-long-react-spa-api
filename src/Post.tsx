@@ -115,7 +115,7 @@ export default function RecipeReviewCard(props: Props) {
     //     setText('');
     // }
     if(text.trim()) {
-      const demotext = text.trim().replace(/[^\S\r\n]+/g, ' ').split('\n').map((line: string) => line.trim()).join('\n');
+      const demotext = text.trim().replace(/[^\S\r\n]+/g, ' ').replace(/\n{2,}/g, '\n\n').split('\n').map((line: string) => line.trim()).join('\n');
       setPostComments([...postComments, {postId: props.postId, id: postComments.length + 1, name: "1", email: "Long Phan", body: demotext}])
       setEmailSend('phanquangminhlong@gmail.com');
       setText('');
@@ -206,16 +206,13 @@ export default function RecipeReviewCard(props: Props) {
           placeholder="Type your comment in here…"
           value={text}
           onChange={(event) => {setText(event.target.value)}}
-          onKeyDown={handleKeyDown}
+          // onKeyDown={handleKeyDown}
           minRows={4}
           maxRows={4}
           startDecorator={
             <Box sx={{ display: 'flex', gap: 0.5 }}>
               <IconButton2 variant="outlined" color="neutral" onClick={addEmoji('👍')}>
                 👍
-              </IconButton2>
-              <IconButton2 variant="outlined" color="neutral" onClick={addEmoji('🏖')}>
-                🏖
               </IconButton2>
               <IconButton2 variant="outlined" color="neutral" onClick={addEmoji('😍')}>
                 😍
